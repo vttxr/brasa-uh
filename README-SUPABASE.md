@@ -31,13 +31,14 @@ Esses dois valores estão em `cms/config.js`. O cliente reutilizável está em `
 
 Antes de aplicar mudanças no projeto real, revise os scripts e confirme que os nomes de tabela estão disponíveis. Se o projeto já contiver tabelas homônimas, pare para comparar os esquemas; não apague dados nem rode um reset para resolver o conflito.
 
-## 2. Aplicar os SQL manualmente, na ordem
+## 2. Ordem de configuração: SQL e criação manual do bucket
 
 As migrações devem ser aplicadas integralmente, uma única vez por projeto. Elas criam a estrutura; o seed copia o conteúdo já existente. São etapas distintas. No **SQL Editor**, abra **New query**, cole o conteúdo completo do arquivo, confira a ordem e execute com a conta de proprietário do projeto. Aguarde o sucesso antes de passar ao próximo. Não cole fragmentos isolados das políticas.
 
 1. `supabase/migrations/20261022000100_cms_schema.sql`: tabelas, constraints, índices, timestamps, funções de autorização, RLS e RPC de reordenação.
-2. `supabase/migrations/20261022000200_site_images.sql`: bucket `site-images`, formatos, limite e políticas de acesso.
-3. `supabase/seed.sql`: textos, imagens locais, links e os nove officers extraídos do site.
+2. **No Dashboard → Storage**, crie manualmente o bucket público `site-images`, com limite de 5 MB e tipos `image/jpeg`, `image/png`, `image/webp`, conforme a seção 5 abaixo. Não envie arquivos antes de concluir as políticas.
+3. `supabase/migrations/20261022000200_site_images.sql`: somente funções de proteção de referências e políticas RLS. Não cria nem altera registros de `storage.buckets`.
+4. `supabase/seed.sql`: textos, imagens locais, links e os nove officers extraídos do site.
 
 Não execute SQL pelo navegador do site. Ele deve ser executado pelo responsável no Dashboard, depois de revisão e autorização. O fluxo de publicação de arquivos não executa migrações.
 
@@ -100,9 +101,18 @@ O texto `COLE-AQUI...` é deliberadamente inválido: impede uma execução acide
 
 Para autorizar outra pessoa, repita a criação no Auth e a autorização do UUID. Para revogar, remova somente a linha daquele UUID em `admin_users`, depois de confirmar quem será afetado. Não exclua todos os usuários administrativos. Ao usar uma conta compartilhada em equipamento alheio, clique em **Sair** ao terminar.
 
-## 5. Conferir o Storage
+## 5. Criar o bucket manualmente pelo Dashboard
 
-Depois da migração de Storage, abra **Storage → site-images** e confira:
+Faça esta etapa **depois da migração de schema (00100) e antes da migração de políticas (00200)**:
+
+1. No projeto correto, abra **Storage → Buckets → New bucket**.
+2. Informe o nome/ID exato `site-images` e habilite **Public bucket**.
+3. Nas opções de criação ou em **Edit bucket** depois de criar, habilite a restrição de tamanho e informe **5 MB** (5.242.880 bytes, ou 5 MiB). Confira o limite salvo; se a tela aceitar bytes, use `5242880`.
+4. Habilite a restrição de tipos MIME e informe **`image/jpeg`, `image/png`, `image/webp`**. JPG e JPEG usam o mesmo MIME `image/jpeg`; não use `image/*` ou `image/jpg`.
+5. Salve e confira as opções abaixo. O limite global do Storage precisa permitir pelo menos esse tamanho; **não reduza o limite global a 5 MB**, pois isso afetaria outros buckets.
+6. Volte ao SQL Editor e aplique a migração **00200** completa. Ela adiciona as funções/políticas; não há necessidade de criar uma política permissiva extra no Dashboard. Depois, execute o seed inicial e configure a conta autorizada antes de testar uploads.
+
+Se `site-images` já existir, confira/ajuste apenas esse bucket no Dashboard, sem recriá-lo ou excluir seus objetos. Não execute de novo migrações que já foram aplicadas. Remover o bloco de criação de bucket deste arquivo local não desfaz configurações antigas de um ambiente que já o executou.
 
 | Opção | Valor esperado |
 | --- | --- |
@@ -112,7 +122,11 @@ Depois da migração de Storage, abra **Storage → site-images** e confira:
 | MIME types | `image/jpeg`, `image/png`, `image/webp` |
 | Upload, atualização e exclusão | Somente usuários explicitamente autorizados pelas políticas |
 
-A migração é a forma reproduzível de criar/configurar o bucket e suas políticas. Não basta criar um bucket público na interface e liberar escrita para “todos os autenticados”. Limite e formatos são verificações do serviço, além da validação feita no navegador. [Documentação de criação e restrições de buckets](https://supabase.com/docs/guides/storage/buckets/creating-buckets) e [políticas de Storage](https://supabase.com/docs/guides/storage/security/access-control).
+O Dashboard configura o bucket, o tamanho e os formatos; a migração 00200 configura somente as funções e políticas. As tabelas internas do Storage devem ser tratadas como somente leitura fora do serviço: não use `INSERT`, `UPDATE` ou `DELETE` direto em `storage.buckets`/`storage.objects`. Não basta criar um bucket público e liberar escrita para “todos os autenticados”. Limite e formatos são verificações do serviço, além da validação no navegador. [Schema do Storage](https://supabase.com/docs/guides/storage/schema/design), [criação e restrições de buckets](https://supabase.com/docs/guides/storage/buckets/creating-buckets) e [políticas de Storage](https://supabase.com/docs/guides/storage/security/access-control).
+
+As políticas permissivas desta migração exigem `bucket_id = 'site-images'`. As restritivas deixam passar `bucket_id <> 'site-images'`, sem conceder novos acessos: os demais buckets continuam sujeitos às próprias políticas. A leitura por URL pública usa a configuração pública do bucket; não depende de liberar listagem anônima de `storage.objects`.
+
+A proteção de exclusão verifica referências em todas as tabelas, incluindo rascunhos e campos de links. Reconhece URLs `/object/public`, `/object/sign`, `/object/authenticated` e `/render/image/...`, remove query/fragmento e decodifica o caminho uma vez (`%2D`, `%2F`, UTF-8 etc.); `+` permanece literal. A detecção aceita qualquer host com esse caminho, de forma conservadora: uma URL de outro projeto com o mesmo objeto pode bloquear a exclusão. Isso não libera renderização de imagens externas: o CMS continua aceitando imagens locais ou a URL pública original do próprio bucket. URLs transformadas/assinadas são reconhecidas para proteção, mas não ampliam os formatos de imagem aceitos pelo editor. A verificação completa do serviço e o teste dos outros buckets estão no [checklist manual](docs/testes-manuais.md).
 
 **As imagens são públicas.** Quem conhece a URL de uma imagem em `site-images` pode abri-la, inclusive quando ela está associada a um rascunho. Publicar/despublicar controla os registros e a exibição no site, não a confidencialidade do arquivo. Envie somente materiais destinados ao público; documentos internos exigem outro bucket privado e outro fluxo. [Modelo de buckets públicos](https://supabase.com/docs/guides/storage/buckets/fundamentals).
 

@@ -33,6 +33,7 @@ export function emptyState(title, description, action) {
   return el('div', {class:'empty-state'}, [el('span', {class:'empty-icon', 'aria-hidden':'true', text:'✳'}), el('h3', {text:title}), el('p', {text:description}), action]);
 }
 export function errorText(error) {
+  if (error?.userMessage) return error.userMessage;
   const code = String(error?.code || '');
   const message = String(error?.message || '').toLowerCase();
   if (message.includes('invalid login credentials')) return 'E-mail ou senha incorretos. Confira os dados e tente novamente.';
@@ -44,7 +45,6 @@ export function errorText(error) {
   if (message.includes('fetch') || message.includes('network') || message.includes('failed to load')) return 'Não foi possível conectar. Confira sua conexão e tente novamente.';
   if (message.includes('rate limit') || error?.status === 429) return 'Foram feitas muitas tentativas. Aguarde um pouco e tente novamente.';
   if (message.includes('referenc') || message.includes('em uso')) return 'Esta imagem está vinculada ao conteúdo do site. Remova as referências antes de excluí-la.';
-  if (error?.userMessage) return error.userMessage;
   return 'Não foi possível concluir a ação. Tente novamente. Se o problema continuar, consulte a pessoa responsável pela configuração.';
 }
 export function userError(message) { const error = new Error(message); error.userMessage = message; return error; }

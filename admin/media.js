@@ -151,7 +151,12 @@ export function storageObjectName(value) {
   if (match) reference = match[1];
   else if (reference.startsWith('site-images/')) reference = reference.slice(12);
   else if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(reference) || reference.startsWith('/')) return '';
-  try { return decodeURIComponent(reference); } catch { return reference; }
+  try {
+    // SQL decodes valid %HH bytes while keeping a malformed '%' literal.
+    // Decode once; invalid UTF-8 or NUL falls back to the original object path.
+    const decoded = decodeURIComponent(reference.replace(/%(?![0-9a-f]{2})/ig, '%25'));
+    return decoded.includes('\0') ? reference : decoded;
+  } catch { return reference; }
 }
 
 export async function imageReferences(client, imageURL) {

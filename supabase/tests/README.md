@@ -2,16 +2,18 @@
 
 Os arquivos SQL foram preparados localmente. Nenhuma migração ou teste foi executado no projeto Supabase remoto. `cms_rls.sql` é uma suíte pgTAP opcional para uma instância **local e descartável** do Supabase; suas fixtures ficam em uma transação encerrada com `ROLLBACK`. Não execute essa suíte em produção.
 
-## Testes automatizados locais executados
+## Histórico dos testes locais anteriores à revisão do Storage
 
 `node --test tests/database.test.mjs` passou **44 testes** em PostgreSQL embarcado via PGlite 0.5.11. Esse teste executa as duas migrações reais e o seed real em memória. Verifica publicação/rascunhos, CRUD autorizado de admin/editor, tentativas de escrita não autorizadas, ausência de autopromoção, timestamps, proteção de imagens referenciadas e execução repetida do seed sem sobrescrever edições. Também cobre a RPC `reorder_cms_records`: ordenação de integrantes/parceiros sem alterar nomes ou publicação, rejeição de IDs nulos/duplicados, rejeição de acesso não autorizado e rollback se um registro tiver sido excluído.
 
 Os schemas `auth` e `storage` são modelos mínimos de teste; a execução de SQL, `SET ROLE` e RLS é real. O teste não verifica JWTs, APIs HTTP de autenticação, PostgREST, arquivos binários, bloqueio de MIME/tamanho pelo serviço Storage, CDN ou concorrência entre transações. Inserções em `storage.objects` ocorrem **somente nessa emulação local em memória**; não repita esse procedimento em uma instância Supabase real. A suíte pgTAP abaixo continua opcional e não foi executada.
 
+Na revisão posterior, a migração 00200 deixou de criar/alterar o bucket. A fixture PGlite agora representa um bucket previamente criado pelo Dashboard, e foram preparados casos adicionais de isolamento dos outros buckets e codificação de URLs. **A suíte de banco atualizada não foi executada nesta revisão**, pois a instrução foi não executar migrações, inclusive localmente. O resultado histórico de 44 testes não valida os novos casos. Foram executados somente os testes sem SQL descritos em [revisao-storage.md](../../docs/revisao-storage.md).
+
 ## Execução local opcional
 
 1. Instale/configure o Supabase CLI e um runtime de contêineres conforme a documentação oficial.
-2. Inicie uma instância **local**, sem vincular/push para o projeto remoto. Aplique nela, em ordem, `20261022000100_cms_schema.sql` e `20261022000200_site_images.sql`.
+2. Inicie uma instância **local**, sem vincular/push para o projeto remoto. Aplique `20261022000100_cms_schema.sql`, crie `site-images` pelo Dashboard/Studio local (público, 5 MB, JPEG/PNG/WebP) e só então aplique `20261022000200_site_images.sql`. Esse roteiro é opcional e não foi executado nesta revisão.
 3. Execute `supabase test db supabase/tests/cms_rls.sql` e examine o resultado TAP. Não considere a suíte aprovada apenas por ter sido criada.
 
 A suíte verifica RLS/grants, leituras públicas, isolamento de rascunhos, tentativa de autopromoção, permissões próprias, CRUD autorizado, timestamps e identificação de referências de imagens nas cinco tabelas de conteúdo. A suíte não faz upload real nem simula o backend de arquivos do Storage.
