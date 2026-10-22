@@ -566,7 +566,7 @@
     "page": "index",
     "section": "section-04",
     "kind": "image",
-    "value": "assets/brasa-uh-outline.png",
+    "value": "assets/brasa-uh-outline.png?v=7e105ed66b07",
     "label": "Imagem: assets/brasa-uh-color.jpeg",
     "attribute": "src",
     "field": "image-001",

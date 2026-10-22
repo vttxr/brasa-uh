@@ -1,6 +1,8 @@
 ﻿import {connectPublic,applySettings} from './cms/public.js';
 import {renderOfficers,renderPartners,createCalendar,renderUpcoming} from './cms/render.js';
+import {initImageFallbacks} from './cms/images.js';
 function init(){
+ initImageFallbacks();
  const data=structuredClone(window.BRASA_DATA||{contacts:{},officers:[],partners:[],events:[]});
  const menu=document.getElementById('menu-toggle'),nav=document.getElementById('nav');
  const closeMenu=()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Abrir menu');};

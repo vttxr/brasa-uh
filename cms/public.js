@@ -20,7 +20,7 @@ export function applyContent(rows,catalog,doc=document){
    else if(!row.value.trim()){node.removeAttribute(c.attribute);if(c.kind==='image')node.hidden=true;}
    else {
     // Old seeded branding should not restore the opaque JPEGs after CMS load.
-    const legacyImages={'assets/brasa-uh-color.jpeg':'assets/brasa-uh-color.png','assets/brasa-uh-white.jpeg':'assets/brasa-uh-white.png'};
+    const legacyImages={'assets/brasa-uh-color.jpeg':'assets/brasa-uh-color.png','assets/brasa-uh-white.jpeg':'assets/brasa-uh-white.png','assets/brasa-uh-outline.png':'assets/brasa-uh-outline.png?v=7e105ed66b07'};
     const value=c.kind==='image'?safeImage(legacyImages[row.value]?(c.value||legacyImages[row.value]):row.value):safeLink(row.value);
     if(value){node.setAttribute(c.attribute,value);if(c.kind==='image')node.hidden=false;}
    }
