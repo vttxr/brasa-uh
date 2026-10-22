@@ -84,7 +84,7 @@ em {
   color: var(--green)
 }
 
-a: focus-visible,button:focus-visible,select:focus-visible {
+a:focus-visible,button:focus-visible,select:focus-visible {
   outline: 3px solid #4586e6;
   outline-offset: 5px
 }
