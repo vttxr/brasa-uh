@@ -1,0 +1,21 @@
+{
+  "name": "brasa-uh-cms",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build-static.mjs",
+    "build:vendor": "node tools/build-vendor.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "playwright test",
+    "check": "node tools/check.mjs",
+    "serve": "node tools/serve.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.11",
+    "@playwright/test": "1.64.1",
+    "@supabase/supabase-js": "2.118.0",
+    "esbuild": "0.28.2",
+    "linkedom": "0.18.14",
+    "parse5": "8.0.1"
+  }
+}

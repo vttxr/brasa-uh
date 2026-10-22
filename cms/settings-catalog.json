@@ -1,0 +1,62 @@
+[
+  {
+    "key": "email",
+    "label": "E-mail público",
+    "kind": "text",
+    "value": ""
+  },
+  {
+    "key": "linkedin",
+    "label": "LinkedIn da BRASA UH",
+    "kind": "url",
+    "value": ""
+  },
+  {
+    "key": "instagram",
+    "label": "Instagram",
+    "kind": "url",
+    "value": "https://www.instagram.com/brasa.uh/"
+  },
+  {
+    "key": "whatsapp",
+    "label": "WhatsApp",
+    "kind": "url",
+    "value": ""
+  },
+  {
+    "key": "getinvolved_url",
+    "label": "Portal Get Involved / inscrição UH",
+    "kind": "url",
+    "value": "https://getinvolved.uh.edu/"
+  },
+  {
+    "key": "portal_brasa_url",
+    "label": "Portal BRASA",
+    "kind": "url",
+    "value": "https://portalbrasa.gobrasa.org/"
+  },
+  {
+    "key": "brasa_global_url",
+    "label": "BRASA Global",
+    "kind": "url",
+    "value": "https://gobrasa.org"
+  },
+  {
+    "key": "uh_url",
+    "label": "University of Houston",
+    "kind": "url",
+    "value": "https://www.uh.edu/"
+  },
+  {
+    "key": "footer_tagline",
+    "label": "Frase do rodapé",
+    "kind": "text",
+    "value": "DO BRASIL. DA UH. DO SEU LADO."
+  },
+  {
+    "key": "footer_description",
+    "label": "Descrição do rodapé",
+    "kind": "text",
+    "value": "The Brazilian Student Association\nat the University of Houston"
+  }
+]
