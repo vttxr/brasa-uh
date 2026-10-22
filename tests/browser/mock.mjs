@@ -5,7 +5,7 @@ const catalog=JSON.parse(await readFile(new URL('cms/content-catalog.json',root)
 const settings=JSON.parse(await readFile(new URL('cms/settings-catalog.json',root)));
 const sandbox={window:{}};vm.runInNewContext(await readFile(new URL('data.js',root),'utf8'),sandbox);
 const stamp='2026-10-22T12:00:00Z';
-export async function mockCMS(context,{authorized=true,offline=false,storageDeleteEmpty=false}={}) {
+export async function mockCMS(context,{authorized=true,offline=false}={}) {
  const user={id:'00000000-0000-4000-8000-000000000001',email:'admin@example.test',aud:'authenticated',role:'authenticated'};
  const db={site_content:catalog.map((c,i)=>({...c,id:'content-'+i,published:true,updated_at:stamp})),site_settings:settings.map(c=>({...c,published:true,updated_at:stamp})),leadership_members:sandbox.window.BRASA_DATA.officers.map((o,i)=>({id:'member-'+i,full_name:o.name,role:o.role,photo_url:o.photo||'',linkedin_url:o.linkedin||'',biography:'',display_order:i,published:true,updated_at:stamp})),partners:[],events:[],admin_users:authorized?[{user_id:user.id,role:'admin'}]:[]};
  const requests=[],files=[];
@@ -23,13 +23,6 @@ export async function mockCMS(context,{authorized=true,offline=false,storageDele
   if(url.pathname.startsWith('/storage/v1/object/public/'))return route.fulfill({contentType:'image/png',body:await readFile(new URL('assets/uh-logo.png',root))});
   if(url.pathname.startsWith('/storage/v1/object/site-images/')&&req.method()==='POST'){
    const name=url.pathname.split('/').pop();files.push({id:crypto.randomUUID(),name,metadata:{size:1024},created_at:stamp});return response(route,{Key:'site-images/'+name,Id:files.at(-1).id});
-  }
-  if(url.pathname==='/storage/v1/object/site-images'&&req.method()==='DELETE'){
-   if(storageDeleteEmpty)return response(route,[]);
-   const prefixes=req.postDataJSON().prefixes;
-   const removed=files.filter(file=>prefixes.includes(file.name));
-   for(const file of removed)files.splice(files.indexOf(file),1);
-   return response(route,removed);
   }
   if(url.pathname.endsWith('/rpc/reorder_cms_records')){
    const {entity,ordered_ids}=req.postDataJSON();for(const [i,id] of ordered_ids.entries())db[entity].find(r=>r.id===id).display_order=i*10;
@@ -56,6 +49,6 @@ export async function mockCMS(context,{authorized=true,offline=false,storageDele
   const singular=req.headers().accept?.includes('vnd.pgrst.object');
   return response(route,req.method()==='HEAD'?null:singular?rows[0]??null:rows,200,{'content-range':`0-${Math.max(0,count-1)}/${count}`});
  });
- return {db,requests,user,files};
+ return {db,requests,user};
 }
 export async function login(page){await page.goto('/admin/');await page.locator('#login-email').fill('admin@example.test');await page.locator('#login-password').fill('local-mock-password');await page.locator('#login-submit').click();}

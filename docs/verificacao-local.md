@@ -1,8 +1,6 @@
 ﻿# Verificação local — BRASA UH CMS
 
-Registro de verificações efetivamente executadas na implementação inicial em 22/10/2026. Não houve migração, escrita, upload, push ou deploy no ambiente remoto. Os números abaixo distinguem execução local real de integrações simuladas. Não representam aprovação do projeto remoto.
-
-A revisão posterior de Storage tem [relatório próprio](revisao-storage.md), sem execução de migrações. Os resultados SQL abaixo não representam uma reexecução dos testes após essa revisão.
+Registro de verificações efetivamente executadas em 22/10/2026. Não houve migração, escrita, upload, push ou deploy no ambiente remoto. Os números abaixo distinguem execução local real de integrações simuladas. Não representam aprovação do projeto remoto.
 
 ## Preservação do site e verificação independente
 

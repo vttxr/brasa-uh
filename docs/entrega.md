@@ -2,7 +2,7 @@
 
 A implementação acrescenta um CMS ao site existente, mantendo HTML, CSS e JavaScript puro. O painel `/admin/` oferece login em português, visão geral, edição de páginas com prévia, gerenciamento de diretoria/eventos/parcerias, imagens e configurações. O site público carrega os registros publicados e mantém a versão estática original como fallback quando a API está indisponível.
 
-**Nenhuma ação remota foi executada pela implementação ou pela revisão do Storage:** não houve SQL no Supabase real, criação de usuário real, upload real, push para GitHub, deploy no Netlify ou troca de domínio. A entrega inicial era uma cópia sem `.git`; a revisão do Storage foi feita no clone local atual. Veja [as alterações e os limites desta revisão](revisao-storage.md) antes de publicar.
+**Nenhuma ação remota foi executada:** não houve SQL no Supabase real, criação de usuário real, upload real, push para GitHub, deploy no Netlify ou troca de domínio. Esta pasta é uma cópia de trabalho sem `.git`; os arquivos devem ser revisados e aplicados ao clone correto antes de uma publicação explicitamente aprovada.
 
 ## Arquivos criados
 
@@ -51,7 +51,7 @@ O bucket `site-images` é público, aceita JPEG/PNG/WebP até 5 MB e restringe m
 ## Sequência para ativar depois da aprovação
 
 1. Abra o projeto correto no Supabase Dashboard e revise os arquivos SQL.
-2. No SQL Editor, aplique `20261022000100_cms_schema.sql`; crie manualmente o bucket público `site-images` no Dashboard (5 MB, JPEG/PNG/WebP); aplique `20261022000200_site_images.sql` e por último `supabase/seed.sql`. A segunda migração contém somente funções e políticas.
+2. No SQL Editor, aplique `20261022000100_cms_schema.sql`, depois `20261022000200_site_images.sql` e por último `supabase/seed.sql`.
 3. Desative cadastro público no Auth, configure as URLs e crie manualmente a primeira conta de e-mail/senha.
 4. Copie o UID do usuário em Authentication → Users e autorize aquele UUID em `admin_users` pelo SQL Editor privilegiado, conforme o exemplo no [guia](../README-SUPABASE.md).
 5. Confira o bucket, limite, formatos e políticas. Abra o painel local com `npm run serve` em `http://localhost:4173/admin/`.

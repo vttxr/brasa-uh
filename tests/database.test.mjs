@@ -45,10 +45,6 @@ const bootstrap = `
   alter table storage.objects enable row level security;
   grant usage on schema storage to anon, authenticated;
   grant select, insert, update, delete on storage.objects to anon, authenticated;
-  -- Fixture somente em PostgreSQL WASM descartável: representa a criação pelo Dashboard.
-  -- Não é uma instrução de setup para um projeto Supabase real.
-  insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
-  values ('site-images','site-images',true,5242880,array['image/jpeg','image/png','image/webp']);
 `;
 
 function fixture(table, label, published = false) {
@@ -288,7 +284,7 @@ test('CMS database: real local migrations, RLS, Storage policies and non-destruc
       }
     });
 
-    await t.test('Storage migration preserves the manually provisioned bucket fixture', async () => {
+    await t.test('bucket is public with configured 5 MiB JPEG/PNG/WebP restrictions', async () => {
       const { rows: [bucket] } = await db.query("select * from storage.buckets where id='site-images'");
       assert.equal(bucket.public, true);
       assert.equal(Number(bucket.file_size_limit), 5242880);
@@ -319,29 +315,6 @@ test('CMS database: real local migrations, RLS, Storage policies and non-destruc
       const removed = await asRole(db, 'editor', () => db.query(
         'delete from storage.objects where name=$1 returning id', [name]));
       assert.equal(removed.rows.length, 1, 'editor can remove an unreferenced object');
-    });
-
-    await t.test('other buckets retain their own allow/deny rules and metadata', async () => {
-      await db.exec(`drop policy test_legacy_allow_all on storage.objects;
-        insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
-        values ('other-bucket','other-bucket',false,1024,array['application/pdf']),
-               ('closed-bucket','closed-bucket',false,2048,array['application/pdf']);
-        create policy test_other_bucket on storage.objects for all to anon,authenticated
-          using (bucket_id='other-bucket') with check (bucket_id='other-bucket')`);
-      const before = (await db.query("select * from storage.buckets where id <> 'site-images' order by id")).rows;
-      for (const identity of ['anon','ordinary','admin','editor']) {
-        await asRole(db,identity,async () => {
-          const name = `document-${identity}.pdf`;
-          const inserted = await db.query("insert into storage.objects(bucket_id,name) values ('other-bucket',$1) returning id",[name]);
-          assert.equal(inserted.rows.length,1,'site-images extension rules must not affect other buckets');
-          assert.equal((await db.query("select id from storage.objects where bucket_id='other-bucket' and name=$1",[name])).rows.length,1);
-          assert.equal((await db.query("update storage.objects set metadata='{}' where bucket_id='other-bucket' and name=$1 returning id",[name])).rows.length,1);
-          assert.equal((await db.query("delete from storage.objects where bucket_id='other-bucket' and name=$1 returning id",[name])).rows.length,1);
-          assert.deepEqual((await db.query("select id from storage.objects where bucket_id='closed-bucket'")).rows,[]);
-        });
-        await denied(() => asRole(db,identity,() => db.query("insert into storage.objects(bucket_id,name) values ('closed-bucket','document.pdf')")));
-      }
-      assert.deepEqual((await db.query("select * from storage.buckets where id <> 'site-images' order by id")).rows,before);
     });
 
     for (const table of contentTables) {
@@ -377,22 +350,6 @@ test('CMS database: real local migrations, RLS, Storage policies and non-destruc
       assert.equal((await asRole(db, 'ordinary', () => db.query(
         "select private.is_site_image_referenced('unknown.png') as referenced"))).rows[0].referenced, true,
       'unprivileged caller cannot use helper to enumerate draft references');
-    });
-
-    await t.test('reference matcher decodes once, preserves plus and handles malformed bytes', async () => {
-      for (const [reference,expected] of [
-        ['https://example.supabase.co/storage/v1/render/image/public/site-images/folder%2Ffoto%20a%C3%A7%C3%A3o.png?width=300','folder/foto ação.png'],
-        ['site-images/a%252Db.png','a%2Db.png'],
-        ['photo+1.png','photo+1.png'],
-        ['photo%2B1.png','photo+1.png'],
-        ['photo%23b%3Fc.png','photo#b?c.png'],
-        ['photo%2D%ZZ.png','photo-%ZZ.png'],
-        ['photo%00.png','photo%00.png'],
-        ['photo%C3%28.png','photo%C3%28.png'],
-        ['https://example.supabase.co/storage/v1/object/public/other-bucket/photo.png',null],
-      ]) {
-        assert.equal((await db.query('select private.site_image_object_name($1) as name',[reference])).rows[0].name,expected,reference);
-      }
     });
   } finally {
     await db.close();

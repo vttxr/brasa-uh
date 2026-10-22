@@ -1,9 +1,13 @@
 -- BRASA UH: Storage. EXECUTAR SOMENTE APÓS APROVAÇÃO e após a migração 00100.
--- Pré-requisito manual: Dashboard > Storage > New bucket > site-images (público),
--- limite 5 MB (5242880 bytes), MIME image/jpeg, image/png e image/webp.
--- Esta migração cria somente funções/políticas; não cria nem altera buckets.
--- Políticas não substituem o Storage API: não alterar buckets/objetos via SQL.
+-- Políticas não substituem o Storage API: não inserir/remover objetos via SQL.
 begin;
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('site-images', 'site-images', true, 5242880, array['image/jpeg', 'image/png', 'image/webp'])
+on conflict (id) do update set
+  public = excluded.public,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
 
 -- Extrai e decodifica o caminho de URLs públicas, assinadas ou de transformação.
 -- Também reconhece caminhos diretos. '+' permanece '+', como em caminhos de URL.

@@ -9,7 +9,7 @@ Registre data, URL/versão testada, navegador, perfil de acesso, resultado, evid
 - [ ] Ler `README-SUPABASE.md` e `docs/auditoria-inicial.md`.
 - [ ] Conferir os scripts locais `npm run check` e `npm test`; guardar sua saída separadamente.
 - [ ] Confirmar aprovação antes de aplicar SQL, criar contas, enviar arquivos ou publicar.
-- [ ] Aplicar `20261022000100_cms_schema.sql`; criar/configurar `site-images` manualmente no Dashboard; aplicar `20261022000200_site_images.sql`; por último, executar `supabase/seed.sql`, na ordem do README. A migração 00200 não cria nem altera buckets.
+- [ ] Aplicar `20261022000100_cms_schema.sql`, depois `20261022000200_site_images.sql`, depois `supabase/seed.sql`, na ordem do README.
 - [ ] Criar três contextos de navegador separados: visitante sem login; conta Auth comum sem linha em `admin_users`; conta Auth autorizada.
 - [ ] Desativar signup público, manter e-mail/senha e conferir URL Configuration.
 - [ ] Confirmar seis tabelas com RLS e funções internas no schema `private`, que não deve estar exposto na Data API.
@@ -93,13 +93,11 @@ Registre data, URL/versão testada, navegador, perfil de acesso, resultado, evid
 
 ## Imagens e Storage
 
-- [ ] Conferir no Dashboard que o limite de 5 MB e os MIME types foram configurados apenas em `site-images`; não reduzir o limite global do projeto.
 - [ ] Enviar um JPEG, um PNG e um WebP válidos, todos abaixo de 5 MB.
 - [ ] Conferir prévia, indicação “enviando”, mensagem de conclusão e URL utilizável; não esperar percentual de progresso numérico.
 - [ ] Reutilizar a imagem em dois registros e salvar ambos. A biblioteca deve permitir reaproveitamento sem upload duplicado.
 - [ ] Substituir a foto de um registro: um novo nome/UUID é criado e a imagem antiga continua funcionando para o outro registro.
 - [ ] Tentar excluir a imagem ainda referenciada: bloqueio no painel e no serviço, inclusive se a única referência estiver em rascunho.
-- [ ] Repetir com URL transformada `/render/image/public/site-images/...`, URL assinada e caminho percent-encoded (`%2D`, `%2F`, UTF-8); parâmetros de consulta não devem esconder a referência. Esses formatos são testes de detecção, não uma ampliação dos formatos aceitos pelo editor de imagem.
 - [ ] Remover todas as referências de uma imagem de teste; excluir explicitamente e confirmar somente esse arquivo.
 - [ ] Cancelar confirmação de exclusão e verificar que nada foi apagado.
 - [ ] Tentar GIF, SVG, PDF, arquivo vazio, MIME/extensão incompatíveis, conteúdo renomeado para JPG e arquivo acima de 5 MB: devem ser rejeitados.
@@ -108,8 +106,6 @@ Registre data, URL/versão testada, navegador, perfil de acesso, resultado, evid
 - [ ] Conferir que visitante não consegue listar o bucket/metadados, mas consegue abrir uma URL pública válida de imagem.
 - [ ] Confirmar conscientemente a limitação do bucket público: a URL de uma imagem ligada a rascunho também abre. Não usar esse bucket para material confidencial.
 - [ ] Simular perda de conexão durante upload/salvamento: erro compreensível, possibilidade de tentar novamente e ausência de mensagem falsa de sucesso.
-- [ ] Se Storage retornar zero objetos removidos, a imagem deve continuar na lista e a exclusão deve ser informada como não confirmada.
-- [ ] Comparar SELECT/listagem, upload, atualização e exclusão em outro bucket antes/depois das políticas, com visitante, usuário comum e admin, respeitando as permissões próprias desse bucket. Não conceder acesso novo para testar. Conferir também que um bucket sem política permissiva continua inacessível e que seus limites/MIME/publicação não mudaram.
 
 ## Verificação direta de RLS, sem confiar na tela
 
