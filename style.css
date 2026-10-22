@@ -177,18 +177,16 @@ header {
   display: block;
   flex-shrink: 0;
   width: 43px;
-  aspect-ratio: 634/710;
-  overflow: hidden;
-  background: white
+  aspect-ratio: 1122/1402;
+  overflow: visible;
+  background: transparent
 }
 
 .brand-symbol img {
-  position: absolute;
-  width: 125.87%;
-  max-width: none;
-  height: auto;
-  left: -14.35%;
-  top: -16.2%
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain
 }
 
 .brand-name {
@@ -854,7 +852,13 @@ footer {
 
 .footer-logo .brand-symbol {
   width: 44px;
-  border-radius: 3px
+  aspect-ratio: 652 / 724;
+  border-radius: 0;
+  background: transparent
+}
+
+.footer-logo .brand-symbol img {
+  display: block
 }
 
 .footer-logo .brand-name b {
@@ -2242,4 +2246,27 @@ footer {
     scroll-behavior: auto!important;
     transition: none!important
   }
+}
+
+/* Consistent vector icons and transparent BRASA artwork. */
+.site-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -.125em;
+  flex-shrink: 0;
+  overflow: visible;
+}
+.brand-symbol { width: 58px; }
+.footer-logo .brand-symbol { width: 58px; }
+.network-crest {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.network-crest .brand-symbol { width: 140px; }
+@media (max-width: 600px) {
+  .brand-symbol, .footer-logo .brand-symbol { width: 48px; }
+  .network-crest .brand-symbol { width: 115px; }
 }

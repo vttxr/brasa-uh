@@ -1,4 +1,5 @@
 import { config } from './config.js';
+import {setIconText} from './icons.js';
 const base = () => typeof location === 'undefined' ? 'https://brasauh-test.netlify.app/' : new URL('../', import.meta.url).href;
 export function safeLink(value) {
   const text = String(value ?? '').trim();
@@ -45,7 +46,7 @@ export function makeImagePath(file) {
 }
 export function element(tag, text, className) {
   const node = document.createElement(tag);
-  if (text !== undefined && text !== null) node.textContent = String(text);
+  if (text !== undefined && text !== null) setIconText(node,text);
   if (className) node.className = className;
   return node;
 }

@@ -1,6 +1,7 @@
 import {cp, mkdir, lstat, readFile, rm, writeFile} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {spawnSync} from 'node:child_process';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const output = path.join(root, 'dist');
@@ -23,4 +24,8 @@ await writeFile(marker, signature);
 for (const file of ['index.html','quem-somos.html','diretoria.html','calendario.html','parcerias.html','faca-parte.html','style.css','script.js','data.js','_headers','assets','admin','cms']) {
   await cp(path.join(root,file),path.join(output,file),{recursive:true});
 }
+// Validate the actual publish folder so a missing image cannot ship unnoticed.
+const check = spawnSync(process.execPath, [path.join(root, 'tools/check.mjs'), output], {stdio:'inherit'});
+if (check.error) throw check.error;
+if (check.status !== 0) throw new Error('Build interrompido: há referências ausentes ou erros de sintaxe em dist/.');
 console.log('Site estático preparado em dist/. Nenhuma operação de banco ou publicação executada.');

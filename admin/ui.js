@@ -1,3 +1,4 @@
+import {decorateIcons} from '../cms/icons.js';
 export function el(tag, attributes = {}, children = []) {
   const node = document.createElement(tag);
   for (const [key, value] of Object.entries(attributes)) {
@@ -13,6 +14,7 @@ export function el(tag, attributes = {}, children = []) {
   for (const child of items) {
     if (child !== null && child !== undefined) node.append(child instanceof Node ? child : document.createTextNode(String(child)));
   }
+  decorateIcons(node);
   return node;
 }
 

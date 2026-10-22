@@ -1,4 +1,5 @@
 import {getAdminClient} from '../cms/client.js';
+import {setIconText} from '../cms/icons.js';
 import {el, button, heading, loading, emptyState, notify, errorText, confirmAction, showError, formatDate, userError} from './ui.js';
 import {renderPageEditor, renderSettings, getCatalog, getSettingsCatalog} from './content.js';
 import {renderRecords} from './records.js';
@@ -145,7 +146,7 @@ loginForm.addEventListener('submit', async event => {
   } catch (error) {
     console.error('BRASA UH: autenticação', error);
     loginMessage.textContent = errorText(error);
-  } finally { submit.disabled = false; submit.textContent = 'Entrar no painel ↗'; }
+  } finally { submit.disabled = false; setIconText(submit,'Entrar no painel ↗'); }
 });
 restoreButton.addEventListener('click', async () => {
   restoreButton.disabled = true;

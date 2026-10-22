@@ -1,4 +1,5 @@
 import {safeLink, safeImage} from '../cms/safety.js';
+import {setIconText} from '../cms/icons.js';
 import {el, button, field, loading, heading, notify, errorText, confirmAction, showError, allRows, setBusy, userError} from './ui.js';
 import {createImageField} from './media.js';
 
@@ -127,7 +128,7 @@ function buildEditor(target, ctx, {definitions, stored, settings = [], rows = []
   const previewButton = button('Abrir prévia ↗', () => {
     previewOpen = !previewOpen;
     previewPane.hidden = !previewOpen;
-    previewButton.textContent = previewOpen ? 'Fechar prévia' : 'Abrir prévia ↗';
+    setIconText(previewButton,previewOpen ? 'Fechar prévia' : 'Abrir prévia ↗');
     layout.classList.toggle('with-preview', previewOpen);
     if (previewOpen && !iframe.src) iframe.src = '../' + (page === 'shared' ? 'index' : page) + '.html?cms-preview=1';
     updatePreview();

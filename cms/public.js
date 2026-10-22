@@ -1,5 +1,6 @@
 import {getPublicClient} from './client.js';
 import {safeLink,safeImage,element} from './safety.js';
+import {setIconText,decorateIcons} from './icons.js';
 const rootURL=new URL('../',import.meta.url);
 const key=r=>`${r.page}.${r.section}.${r.field}`;
 export async function readPublished(client,table,filters={}){
@@ -14,10 +15,15 @@ export function applyContent(rows,catalog,doc=document){
  const permitted=new Map(catalog.map(c=>[key(c),c]));
  for(const row of rows){const c=permitted.get(key(row));if(!c||row.published===false||c.kind!==row.kind||typeof row.value!=='string')continue;
   for(const node of doc.querySelectorAll(c.target)){
-   if(c.kind==='text')node.textContent=(c.prefix||'')+row.value+(c.suffix||'');
+   if(c.kind==='text')setIconText(node,(c.prefix||'')+row.value+(c.suffix||''));
    else if(c.kind==='alt')node.setAttribute('alt',row.value);
    else if(!row.value.trim()){node.removeAttribute(c.attribute);if(c.kind==='image')node.hidden=true;}
-   else {const value=c.kind==='image'?safeImage(row.value):safeLink(row.value);if(value){node.setAttribute(c.attribute,value);if(c.kind==='image')node.hidden=false;}}
+   else {
+    // Old seeded branding should not restore the opaque JPEGs after CMS load.
+    const legacyImages={'assets/brasa-uh-color.jpeg':'assets/brasa-uh-color.png','assets/brasa-uh-white.jpeg':'assets/brasa-uh-white.png'};
+    const value=c.kind==='image'?safeImage(legacyImages[row.value]?(c.value||legacyImages[row.value]):row.value):safeLink(row.value);
+    if(value){node.setAttribute(c.attribute,value);if(c.kind==='image')node.hidden=false;}
+   }
   }
  }
 }
@@ -26,7 +32,7 @@ export function applySettings(rows,doc=document){
  for(const node of doc.querySelectorAll('[data-setting-link]')){const k=node.dataset.settingLink;if(!(k in settings))continue;const link=safeLink(settings[k]);if(link)node.setAttribute('href',link);else node.removeAttribute('href');}
  for(const node of doc.querySelectorAll('[data-setting-text]')){const k=node.dataset.settingText;if(!(k in settings))continue;
   const prefix=node.textContent.match(/^\s*/)[0],suffix=node.textContent.match(/\s*$/)[0];
-  node.replaceChildren(doc.createTextNode(prefix));settings[k].split('\n').forEach((line,i)=>{if(i)node.append(element('br'));node.append(doc.createTextNode(line));});node.append(doc.createTextNode(suffix));}
+  node.replaceChildren(doc.createTextNode(prefix));settings[k].split('\n').forEach((line,i)=>{if(i)node.append(element('br'));node.append(doc.createTextNode(line));});node.append(doc.createTextNode(suffix));decorateIcons(node);}
  for(const kind of ['email','linkedin','whatsapp']){
   if(!(kind in settings))continue;let nodes=[...doc.querySelectorAll(`[data-contact="${kind}"]`)];
   if(!nodes.length&&kind==='whatsapp'&&settings.whatsapp){const contact=doc.querySelector('[data-contact="email"]')?.parentElement;if(contact){const span=element('span');span.dataset.contact=kind;contact.append(span);nodes=[span];}}
