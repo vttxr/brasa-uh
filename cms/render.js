@@ -1,5 +1,6 @@
 import {element,externalLink,safeImage} from './safety.js';
 import {setIconText} from './icons.js';
+import {applyHeadingTypography} from './typography.js';
 function image(src,alt){const url=safeImage(src);if(!url)return null;const img=element('img');img.src=url;img.alt=alt;img.loading='lazy';return img;}
 function empty(container,title,message){const box=element('div',undefined,'empty-state');box.append(element('h3',title),element('p',message));container.replaceChildren(box);}
 export function renderOfficers(container,members){
@@ -36,4 +37,5 @@ export function renderUpcoming(events,doc=document){
  const today=['year','month','day'].map(k=>parts.find(p=>p.type===k).value).join('-');const next=events.filter(e=>e.date>=today).sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||'')))[0];if(!next)return;
  teaser.querySelector('h3').textContent=next.title;teaser.querySelector(':scope > p').textContent=`${next.date.slice(8,10)}/${next.date.slice(5,7)}/${next.date.slice(0,4)}${next.time?' · '+next.time:''}${next.location?' · '+next.location:''}`;
  const link=teaser.querySelector('.arrow-link');setIconText(link,'Ver evento no calendário →');link.href='calendario.html';link.removeAttribute('target');
+ applyHeadingTypography(teaser);
 }

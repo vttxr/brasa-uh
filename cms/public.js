@@ -1,6 +1,7 @@
 import {getPublicClient} from './client.js';
 import {safeLink,safeImage,element} from './safety.js';
 import {setIconText,decorateIcons} from './icons.js';
+import {applyHeadingTypography} from './typography.js';
 const rootURL=new URL('../',import.meta.url);
 const key=r=>`${r.page}.${r.section}.${r.field}`;
 export async function readPublished(client,table,filters={}){
@@ -26,6 +27,7 @@ export function applyContent(rows,catalog,doc=document){
    }
   }
  }
+ applyHeadingTypography(doc);
 }
 export function applySettings(rows,doc=document){
  const settings=Object.fromEntries(rows.filter(r=>r.published!==false&&typeof r.value==='string').map(r=>[r.key,r.value]));

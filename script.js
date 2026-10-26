@@ -1,7 +1,9 @@
 ﻿import {connectPublic,applySettings} from './cms/public.js';
 import {renderOfficers,renderPartners,createCalendar,renderUpcoming} from './cms/render.js';
 import {initImageFallbacks} from './cms/images.js';
+import {applyHeadingTypography} from './cms/typography.js';
 function init(){
+ applyHeadingTypography();
  initImageFallbacks();
  const data=structuredClone(window.BRASA_DATA||{contacts:{},officers:[],partners:[],events:[]});
  const menu=document.getElementById('menu-toggle'),nav=document.getElementById('nav');

@@ -5,7 +5,7 @@ import {renderPageEditor} from './content.js';
 
 export const RECORD_TYPES = {
   leadership: {
-    table:'leadership_members', page:'diretoria', title:'Diretoria', singular:'integrante', titleKey:'full_name', imageKey:'photo_url',
+    type:'leadership', table:'leadership_members', page:'diretoria', title:'Diretoria', singular:'integrante', titleKey:'full_name', imageKey:'photo_url',
     description:'Apresente as pessoas que fazem a BRASA UH acontecer.', add:'Adicionar integrante',
     fields:[
       {key:'full_name', label:'Nome completo', required:true, max:200},
@@ -16,7 +16,7 @@ export const RECORD_TYPES = {
     ]
   },
   events: {
-    table:'events', page:'calendario', title:'Calendário', singular:'evento', titleKey:'title', imageKey:'image_url',
+    type:'events', table:'events', page:'calendario', title:'Calendário', singular:'evento', titleKey:'title', imageKey:'image_url',
     description:'Organize os próximos encontros da comunidade.', add:'Adicionar evento',
     fields:[
       {key:'title', label:'Título do evento', required:true, max:300},
@@ -31,7 +31,7 @@ export const RECORD_TYPES = {
     ]
   },
   partners: {
-    table:'partners', page:'parcerias', title:'Parcerias', singular:'parceiro', titleKey:'name', imageKey:'logo_url',
+    type:'partners', table:'partners', page:'parcerias', title:'Parcerias', singular:'parceiro', titleKey:'name', imageKey:'logo_url',
     description:'Gerencie as organizações e os benefícios da rede local.', add:'Adicionar parceiro',
     fields:[
       {key:'name', label:'Nome da organização', required:true, max:200},
@@ -151,7 +151,7 @@ export async function renderRecords(target, ctx, type) {
           down.disabled = index === rows.length - 1 || Boolean(query) || filter.value !== 'all';
           actions.unshift(el('div', {class:'reorder-buttons'}, [up, down]));
         }
-        stack.append(el('article', {class:'record-row'}, [
+        stack.append(el('article', {class:'record-row', 'data-record-type':type}, [
           thumb,
           el('div', {class:'record-info'}, [el('h3', {text:row[spec.titleKey]}), el('p', {text:description || ''}), statusBadge(row.published)]),
           el('div', {class:'record-actions'}, actions)
@@ -176,8 +176,8 @@ export async function editRecord(ctx, spec, record) {
     let finished = false;
     const controls = new Map();
     const form = el('form', {class:'record-form'});
-    const dialog = el('dialog', {class:'record-dialog', 'aria-label':(record.id ? 'Editar ' : 'Adicionar ') + spec.singular});
-    const preview = el('div', {class:'record-preview'});
+    const dialog = el('dialog', {class:'record-dialog', 'data-record-type':spec.type, 'aria-label':(record.id ? 'Editar ' : 'Adicionar ') + spec.singular});
+    const preview = el('div', {class:'record-preview', 'data-record-type':spec.type});
     const formError = el('p', {class:'form-message error-text', role:'alert'});
     const markChanged = () => { if (!dialog.isConnected) return; dirty = true; ctx.setDirty(true); updatePreview(); };
     const close = async () => {

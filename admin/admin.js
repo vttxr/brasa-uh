@@ -1,5 +1,6 @@
 import {getAdminClient} from '../cms/client.js';
 import {setIconText} from '../cms/icons.js';
+import {applyHeadingTypography} from '../cms/typography.js';
 import {el, button, heading, loading, emptyState, notify, errorText, confirmAction, showError, formatDate, userError} from './ui.js';
 import {renderPageEditor, renderSettings, getCatalog, getSettingsCatalog} from './content.js';
 import {renderRecords} from './records.js';
@@ -18,6 +19,7 @@ const ROUTES = {
 };
 const boot = document.getElementById('boot');
 const loginView = document.getElementById('login-view');
+applyHeadingTypography(loginView);
 const shell = document.getElementById('app-shell');
 const workspace = document.getElementById('workspace');
 const loginForm = document.getElementById('login-form');

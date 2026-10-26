@@ -1,19 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap');
-
-:root {
-  --red: #c8102e;
-  --red-dark: #a00d26;
-  --green: #063e2c;
-  --deep: #062d22;
-  --yellow: #f9d448;
-  --blue: #1555a5;
-  --ink: #183c2f;
-  --muted: #5e7067;
-  --cream: #f7f6ee;
-  --soft: #eeefe5;
-  --line: #d9dfd2;
-  --display: 'Bricolage Grotesque',Arial,sans-serif
-}
+@import url('assets/brand.css');
 
 * {
   box-sizing: border-box
@@ -25,10 +10,11 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Instrument Sans',Arial,sans-serif;
+  font-family: var(--font-body);
   color: var(--ink);
   background: var(--cream);
-  line-height: 1.65
+  font-size: var(--text-body);
+  line-height: 1.5
 }
 
 a {
@@ -56,23 +42,23 @@ h1,h2,h3,p {
 h1,h2,h3 {
   font-family: var(--display);
   line-height: 1.08;
-  letter-spacing: -.045em
+  letter-spacing: -.02em
 }
 
 h1 {
-  font-size: clamp(42px,5vw,72px);
+  font-size: var(--text-h1);
   font-weight: 700
 }
 
 h2 {
-  font-size: clamp(32px,3.6vw,52px);
-  font-weight: 600;
+  font-size: var(--text-h2);
+  font-weight: 400;
   margin-bottom: 25px
 }
 
 h3 {
-  font-size: 28px;
-  font-weight: 600
+  font-size: var(--text-h3);
+  font-weight: 700
 }
 
 p {
@@ -85,7 +71,7 @@ em {
 }
 
 a:focus-visible,button:focus-visible,select:focus-visible {
-  outline: 3px solid #4586e6;
+  outline: 3px solid var(--focus-ring);
   outline-offset: 5px
 }
 
@@ -99,7 +85,7 @@ button,a {
   top: -100px;
   z-index: 100;
   padding: 12px;
-  background: white
+  background: var(--surface)
 }
 
 .skip:focus {
@@ -117,7 +103,7 @@ button,a {
 }
 
 .eyebrow {
-  font-size: 10px;
+  font-size: var(--text-caption);
   letter-spacing: 1.5px;
   font-weight: 700;
   display: block;
@@ -126,13 +112,13 @@ button,a {
 
 .topbar {
   background: var(--deep);
-  color: #e0e9d9;
+  color: var(--on-dark);
   padding: 8px 6%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  font-size: 9px;
+  font-size: var(--text-caption);
   letter-spacing: 1px
 }
 
@@ -144,7 +130,7 @@ button,a {
 
 .topbar a {
   letter-spacing: 0;
-  font-size: 10px
+  font-size: var(--text-caption)
 }
 
 .flag-dot {
@@ -160,7 +146,7 @@ header {
   justify-content: space-between;
   gap: 25px;
   padding: 21px 6%;
-  background: white;
+  background: var(--surface);
   position: relative;
   z-index: 10
 }
@@ -194,20 +180,20 @@ header {
   font-size: 25px;
   letter-spacing: -1px;
   line-height: 1;
-  font-weight: 800
+  font-weight: 900
 }
 
 .brand-name>b {
-  color: var(--red)
+  color: inherit
 }
 
 .brand-name small {
-  font-family: 'Instrument Sans',sans-serif;
+  font-family: var(--font-body);
   display: block;
-  font-size: 6.5px;
+  font-size: var(--text-caption);
   letter-spacing: 1px;
   margin-top: 8px;
-  font-weight: 600
+  font-weight: 700
 }
 
 .logo:focus-visible {
@@ -219,7 +205,7 @@ nav {
   align-items: center;
   gap: 25px;
   font-size: 12px;
-  font-weight: 600
+  font-weight: 700
 }
 
 nav>a:not(.button) {
@@ -239,10 +225,10 @@ nav>a[aria-current],nav>a:not(.button):hover {
   gap: 27px;
   background: var(--red);
   border: 1px solid var(--red);
-  color: white;
+  color: var(--surface);
   padding: 16px 23px;
   border-radius: 6px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 13px;
   line-height: 1.4;
   transition: background .2s,transform .2s
@@ -252,7 +238,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
   background: var(--red-dark);
   border-color: var(--red-dark);
   transform: translateY(-2px);
-  color: white
+  color: var(--surface)
 }
 
 .button.small {
@@ -262,19 +248,19 @@ nav>a[aria-current],nav>a:not(.button):hover {
 
 .button.outline {
   background: transparent;
-  border-color: #91af9b;
-  color: white
+  border-color: var(--border-on-dark);
+  color: var(--surface)
 }
 
 .button.outline:hover {
-  background: #ffffff12;
-  border-color: white
+  background: var(--hover-on-dark);
+  border-color: var(--surface)
 }
 
 .button.white {
-  background: white;
+  background: var(--surface);
   color: var(--red);
-  border-color: white
+  border-color: var(--surface)
 }
 
 .actions {
@@ -309,8 +295,8 @@ nav>a[aria-current],nav>a:not(.button):hover {
   display: flex;
   align-items: center;
   gap: 9px;
-  color: #dce4c9;
-  font-size: 9px
+  color: var(--on-dark);
+  font-size: var(--text-caption)
 }
 
 .status-dot {
@@ -323,7 +309,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
 .hero h1 {
   line-height: 1.02;
   margin-bottom: 26px;
-  letter-spacing: -.055em
+  letter-spacing: -.02em
 }
 
 .hero h1 em {
@@ -335,7 +321,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
 .hero-description {
   font-size: 15px;
   line-height: 1.8;
-  color: #d9e2d5;
+  color: var(--on-dark);
   margin-bottom: 30px
 }
 
@@ -347,9 +333,9 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .hero-school p {
-  font-size: 10px;
+  font-size: var(--text-caption);
   letter-spacing: .2px;
-  color: #c6d2bf;
+  color: var(--on-dark);
   line-height: 1.6;
   margin: 0
 }
@@ -390,31 +376,34 @@ nav>a[aria-current],nav>a:not(.button):hover {
   content: '';
   position: absolute;
   inset: 70% 0 0;
-  background: linear-gradient(transparent,#002a1dcc)
+  background: linear-gradient(transparent,var(--photo-overlay))
 }
 
 .campus-photo figcaption {
   position: absolute;
-  bottom: 22px;
+  bottom: 16px;
+  left: 20px;
   right: 20px;
-  color: white;
-  font-size: 8px;
+  color: var(--surface);
+  font-size: var(--text-caption);
   letter-spacing: 1.2px;
+  line-height: 1.4;
+  text-align: right;
   z-index: 1
 }
 
 .hero-crest {
   position: absolute;
   left: -32px;
-  bottom: 28px;
+  bottom: 72px; /* Reserve the photo's lower edge for the full caption. */
   display: flex;
   align-items: center;
   gap: 15px;
-  background: white;
+  background: var(--surface);
   padding: 21px 26px;
   border-radius: 8px;
   color: var(--green);
-  box-shadow: 0 12px 25px #04291a30;
+  box-shadow: 0 12px 25px var(--shadow-color);
   z-index: 2;
   transform: rotate(-4deg)
 }
@@ -424,7 +413,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .hero-crest>span:last-child {
-  font-size: 9px;
+  font-size: var(--text-caption);
   letter-spacing: 1.1px;
   line-height: 1.4
 }
@@ -441,7 +430,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
   right: -12px;
   top: -22px;
   padding: 25px 25px 17px;
-  background: white;
+  background: var(--surface);
   border-radius: 50%;
   width: 122px;
   height: 122px;
@@ -460,7 +449,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .cougar-badge span {
-  font-size: 7px;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: 1px;
   color: var(--red)
@@ -470,9 +459,9 @@ nav>a[aria-current],nav>a:not(.button):hover {
   position: absolute;
   right: 0;
   bottom: -29px;
-  font-size: 8px;
+  font-size: var(--text-caption);
   letter-spacing: 2px;
-  color: #b1c5b5
+  color: var(--on-dark)
 }
 
 .identity-strip {
@@ -481,7 +470,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
   justify-content: space-between;
   align-items: center;
   gap: 28px;
-  font-size: 9px;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: 1.4px;
   background: var(--yellow);
@@ -538,11 +527,11 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .home-about h2 em {
-  color: #698267
+  color: var(--green)
 }
 
 .arrow-link {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 13px;
   border-bottom: 1px solid currentColor;
   padding-bottom: 5px;
@@ -570,19 +559,19 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .pillar-grid article {
-  background: #e5ebdd;
+  background: var(--surface);
   padding: 28px 28px 23px;
   border-radius: 7px;
-  border-top: 4px solid #426b4c
+  border-top: 4px solid var(--green)
 }
 
 .pillar-grid article:nth-child(2) {
-  background: #e6edf3;
+  background: var(--surface);
   border-color: var(--blue)
 }
 
 .pillar-grid article:nth-child(3) {
-  background: #f5e6df;
+  background: var(--surface);
   border-color: var(--red)
 }
 
@@ -594,7 +583,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .pillar-num {
-  font-size: 8px;
+  font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: 1.1px;
   color: var(--green)
@@ -615,19 +604,19 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .pillar-grid h3 {
-  font-size: 28px;
+  font-size: var(--text-h3);
   margin: 32px 0 18px
 }
 
 .pillar-grid p {
   font-size: 13px;
-  color: #4b6255;
+  color: var(--muted);
   line-height: 1.8;
   margin-bottom: 0
 }
 
 .home-events {
-  background: #e9eddf;
+  background: var(--soft);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12%;
@@ -635,7 +624,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .home-events h2 em {
-  color: #698267
+  color: var(--green)
 }
 
 .home-events>div>p {
@@ -650,7 +639,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
   color: var(--cream);
   position: relative;
   border-radius: 7px;
-  box-shadow: 10px 10px 0 #d5dfc6
+  box-shadow: 10px 10px 0 var(--line)
 }
 
 .teaser-top {
@@ -661,8 +650,8 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .teaser-top .eyebrow {
-  font-size: 8px;
-  color: #d2e2c1;
+  font-size: var(--text-caption);
+  color: var(--on-dark);
   margin: 0
 }
 
@@ -673,7 +662,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .calendar-teaser h3 {
-  font-size: 38px;
+  font-size: var(--text-h3);
   letter-spacing: -1.5px;
   color: var(--yellow);
   margin-bottom: 20px
@@ -683,7 +672,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
   max-width: 330px;
   font-size: 13px;
   line-height: 1.8;
-  color: #d2dfcb
+  color: var(--on-dark)
 }
 
 .calendar-teaser .arrow-link {
@@ -699,8 +688,8 @@ nav>a[aria-current],nav>a:not(.button):hover {
   display: flex;
   justify-content: space-between;
   padding: 17px 0;
-  border-top: 1px solid #50725b;
-  font-size: 8px;
+  border-top: 1px solid var(--border-on-dark);
+  font-size: var(--text-caption);
   letter-spacing: 1.3px
 }
 
@@ -718,7 +707,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .network h2 em {
-  color: #698267
+  color: var(--green)
 }
 
 .network-art {
@@ -732,7 +721,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .network-crest {
-  background: white;
+  background: var(--surface);
   width: 140px;
   height: 155px;
   position: relative;
@@ -770,7 +759,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
 .network-art small {
   display: block;
   letter-spacing: 1.4px;
-  font-size: 10px;
+  font-size: var(--text-caption);
   margin-top: 40px;
   position: relative;
   z-index: 1
@@ -781,7 +770,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
   bottom: 25px;
   right: 28px;
   font-size: 38px;
-  font-weight: 500
+  font-weight: 400
 }
 
 .join-banner {
@@ -798,13 +787,13 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .join-banner .eyebrow {
-  color: #c9d9bc;
-  font-size: 9px
+  color: var(--on-dark);
+  font-size: var(--text-caption)
 }
 
 .join-banner h2 {
   margin: 0;
-  font-size: 46px
+  font-size: var(--text-h2)
 }
 
 .join-banner>div {
@@ -817,7 +806,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
 }
 
 .join-banner p {
-  color: #d1dfc7;
+  color: var(--on-dark);
   font-size: 14px;
   line-height: 1.8;
   margin-bottom: 22px
@@ -828,7 +817,7 @@ nav>a[aria-current],nav>a:not(.button):hover {
   right: -55px;
   top: 10px;
   font-size: 230px;
-  color: #50764c66;
+  color: var(--decoration-on-dark);
   line-height: 1;
   transform: rotate(20deg)
 }
@@ -837,7 +826,7 @@ footer {
   padding: 60px 6% 25px;
   background: var(--deep);
   color: var(--cream);
-  border-top: 1px solid #4a6551
+  border-top: 1px solid var(--border-on-dark)
 }
 
 .footer-top {
@@ -862,31 +851,31 @@ footer {
 }
 
 .footer-logo .brand-name b {
-  color: var(--yellow)
+  color: inherit
 }
 
 .footer-top p {
   font-size: 12px;
-  color: #b8c8b7
+  color: var(--on-dark)
 }
 
 .footer-tag {
-  font-size: 8px;
+  font-size: var(--text-caption);
   letter-spacing: 1px;
   color: var(--yellow)
 }
 
 .footer-top h3 {
-  font-family: 'Instrument Sans',sans-serif;
-  font-size: 12px;
+  font-family: var(--font-body);
+  font-size: var(--text-h3);
   letter-spacing: 0;
   margin-bottom: 23px
 }
 
 .footer-top>div>a:not(.logo),.footer-top>div>span[data-contact] {
   display: block;
-  font-size: 11px;
-  color: #c2d1bf;
+  font-size: var(--text-caption);
+  color: var(--on-dark);
   margin-bottom: 12px
 }
 
@@ -897,13 +886,13 @@ footer {
 .footer-bottom {
   margin-top: 45px;
   padding-top: 25px;
-  border-top: 1px solid #44644e;
+  border-top: 1px solid var(--border-on-dark);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 25px;
-  color: #c1d0bc;
-  font-size: 9px;
+  color: var(--on-dark);
+  font-size: var(--text-caption);
   line-height: 1.8
 }
 
@@ -911,7 +900,7 @@ footer {
   display: flex;
   align-items: center;
   gap: 18px;
-  font-size: 8px;
+  font-size: var(--text-caption);
   letter-spacing: 1px
 }
 
@@ -923,7 +912,7 @@ footer {
 
 .uh-logo-tile {
   padding: 17px;
-  background: white;
+  background: var(--surface);
   border-radius: 4px
 }
 
@@ -951,16 +940,16 @@ footer {
 }
 
 .page-intro .eyebrow {
-  color: #d2e2c1;
-  font-size: 9px
+  color: var(--on-dark);
+  font-size: var(--text-caption)
 }
 
 .page-intro h1 {
   font-family: var(--display);
-  font-size: clamp(36px,4.2vw,60px);
+  font-size: var(--text-h1);
   line-height: 1.08;
   margin: 0 0 23px;
-  letter-spacing: -.045em
+  letter-spacing: -.02em
 }
 
 .page-intro h1 em {
@@ -971,7 +960,7 @@ footer {
   font-size: 15px;
   max-width: 630px;
   margin-bottom: 0;
-  color: #d3dfcb
+  color: var(--on-dark)
 }
 
 .intro-art {
@@ -986,7 +975,7 @@ footer {
   position: absolute;
   width: 165px;
   height: 165px;
-  border: 24px solid #6d92654d;
+  border: 24px solid var(--decoration-on-dark);
   right: 0;
   top: 0;
   border-radius: 50%
@@ -1005,9 +994,9 @@ footer {
   position: absolute;
   bottom: 0;
   left: 0;
-  font-size: 8px;
+  font-size: var(--text-caption);
   letter-spacing: 2px;
-  color: #c7d5b9
+  color: var(--on-dark)
 }
 
 .mission,.split {
@@ -1025,7 +1014,7 @@ footer {
 }
 
 .empty-state {
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--line);
   padding: 50px;
   text-align: center;
@@ -1033,7 +1022,7 @@ footer {
 }
 
 .empty-state h3 {
-  font-size: 27px
+  font-size: var(--text-h3)
 }
 
 .empty-state p {
@@ -1061,15 +1050,15 @@ footer {
 
 .officer img {
   width: 100%;
-  aspect-ratio: 4/3.2;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  object-position: top;
+  object-position: center;
   background: var(--soft);
   border-radius: 7px
 }
 
 .officer h3 {
-  font-size: 24px;
+  font-size: var(--text-h3);
   margin: 20px 0 7px
 }
 
@@ -1080,19 +1069,19 @@ footer {
 }
 
 .officer .arrow-link {
-  font-size: 11px
+  font-size: var(--text-caption)
 }
 
 .officer-placeholder {
-  aspect-ratio: 4/3.2;
+  aspect-ratio: 1 / 1;
   border-radius: 7px;
-  background: #e7ecdd;
+  background: var(--soft);
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 4px solid #54764e
+  border-bottom: 4px solid var(--green)
 }
 
 .officer-placeholder:before {
@@ -1100,7 +1089,7 @@ footer {
   position: absolute;
   width: 74%;
   aspect-ratio: 1;
-  border: 1px solid #67846b45;
+  border: 1px solid var(--line);
   border-radius: 50%;
   right: -20px;
   top: -20px
@@ -1110,7 +1099,7 @@ footer {
   font-family: var(--display);
   font-size: clamp(54px,6vw,84px);
   letter-spacing: -.06em;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--green);
   position: relative
 }
@@ -1119,24 +1108,24 @@ footer {
   position: absolute;
   bottom: 17px;
   left: 22px;
-  font-size: 8px;
+  font-size: var(--text-caption);
   letter-spacing: 2px;
   font-weight: 700;
-  color: #58704d
+  color: var(--green)
 }
 
 .officer:nth-child(3n+2) .officer-placeholder {
-  background: #eee6c8;
+  background: var(--tint-yellow);
   border-color: var(--yellow)
 }
 
 .officer:nth-child(3n) .officer-placeholder {
-  background: #e9ded8;
+  background: var(--tint-red);
   border-color: var(--red)
 }
 
 .officer:nth-child(3n) .officer-placeholder>span {
-  color: #9c2031
+  color: var(--red)
 }
 
 .calendar-controls {
@@ -1147,7 +1136,7 @@ footer {
 }
 
 .calendar-controls h2 {
-  font-size: 35px;
+  font-size: var(--text-h2);
   text-transform: capitalize
 }
 
@@ -1157,7 +1146,7 @@ footer {
 }
 
 .month-actions button {
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--line);
   padding: 10px 16px;
   border-radius: 5px;
@@ -1172,7 +1161,7 @@ footer {
   overflow-x: auto;
   border-radius: 7px;
   border: 1px solid var(--line);
-  background: white
+  background: var(--surface)
 }
 
 #calendar {
@@ -1188,10 +1177,10 @@ footer {
   padding: 13px;
   background: var(--green);
   color: var(--cream);
-  font-size: 10px;
-  font-weight: 600;
+  font-size: var(--text-caption);
+  font-weight: 700;
   text-align: center;
-  border-right: 1px solid #416249
+  border-right: 1px solid var(--border-on-dark)
 }
 
 .day {
@@ -1207,13 +1196,13 @@ footer {
 }
 
 .day.outside {
-  background: #f5f6ef;
-  color: #adb5a9
+  background: var(--soft);
+  color: var(--muted)
 }
 
 .day.today>span {
   background: var(--red);
-  color: white;
+  color: var(--surface);
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -1224,17 +1213,17 @@ footer {
 
 .day a {
   display: block;
-  background: #f8ecc2;
+  background: var(--tint-yellow);
   padding: 4px;
   color: var(--green);
-  font-size: 10px;
+  font-size: var(--text-caption);
   margin-top: 6px;
   border-radius: 3px;
   overflow-wrap: anywhere
 }
 
 .calendar-note {
-  font-size: 11px;
+  font-size: var(--text-caption);
   margin-top: 13px
 }
 
@@ -1258,7 +1247,7 @@ footer {
   margin-left: 10px;
   padding: 9px 12px;
   border: 1px solid var(--line);
-  background: white;
+  background: var(--surface);
   border-radius: 4px;
   color: var(--green)
 }
@@ -1287,7 +1276,7 @@ footer {
 }
 
 .event-row h3 {
-  font-size: 23px;
+  font-size: var(--text-h3);
   margin-bottom: 10px
 }
 
@@ -1302,7 +1291,7 @@ footer {
 }
 
 .notice {
-  background: #e7ecdd;
+  background: var(--soft);
   border-left: 3px solid var(--green);
   border-radius: 0 5px 5px 0;
   padding: 28px;
@@ -1330,14 +1319,14 @@ footer {
   background: transparent;
   border: 1px solid var(--line);
   padding: 14px 22px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--green);
   font-size: 13px;
   border-radius: 5px
 }
 
 .tabs button[aria-selected=true] {
-  color: white;
+  color: var(--surface);
   background: var(--green);
   border-color: var(--green)
 }
@@ -1364,19 +1353,19 @@ footer {
 .id-card {
   aspect-ratio: 1.6;
   background: var(--green);
-  color: white;
+  color: var(--surface);
   padding: 30px;
   border-radius: 15px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 40px #04411522;
+  box-shadow: 0 20px 40px var(--shadow-color);
   transform: rotate(3deg)
 }
 
 .id-card>span {
   font-size: 26px;
   font-family: var(--display);
-  font-weight: 800;
+  font-weight: 900;
   position: relative;
   z-index: 1
 }
@@ -1386,7 +1375,7 @@ footer {
 }
 
 .id-card p {
-  color: white;
+  color: var(--surface);
   font-size: 18px;
   line-height: 1.2;
   margin: 45px 0 15px;
@@ -1396,7 +1385,7 @@ footer {
 }
 
 .id-card small {
-  font-size: 7px;
+  font-size: var(--text-caption);
   letter-spacing: 1.3px;
   position: relative;
   z-index: 1
@@ -1433,12 +1422,12 @@ footer {
 }
 
 .global-links article>span {
-  font-size: 11px;
+  font-size: var(--text-caption);
   color: var(--green)
 }
 
 .global-links h3 {
-  font-size: 25px;
+  font-size: var(--text-h3);
   margin: 20px 0
 }
 
@@ -1456,13 +1445,13 @@ footer {
   padding: 26px;
   border: 1px solid var(--line);
   border-radius: 7px;
-  background: white
+  background: var(--surface)
 }
 
 .join-steps article>span {
   font-size: 40px;
   color: var(--green);
-  font-weight: 600;
+  font-weight: 700;
   font-family: var(--display);
   letter-spacing: -2px
 }
@@ -1476,7 +1465,7 @@ footer {
 }
 
 .join-steps h2 {
-  font-size: 28px;
+  font-size: var(--text-h2);
   margin: 23px 0
 }
 
@@ -1497,7 +1486,7 @@ footer {
 .partner-grid article {
   border: 1px solid var(--line);
   padding: 25px;
-  background: white;
+  background: var(--surface);
   border-radius: 6px
 }
 
@@ -1525,13 +1514,13 @@ footer {
   }
   nav {
     gap: 16px;
-    font-size: 11px
+    font-size: var(--text-caption)
   }
   .brand-name {
     font-size: 23px
   }
   .brand-name small {
-    font-size: 6px
+    font-size: var(--text-caption)
   }
   .brand-symbol {
     width: 38px
@@ -1540,15 +1529,14 @@ footer {
     gap: 5%
   }
   .hero h1 {
-    font-size: 5.2vw
+    font-size: var(--text-impact)
   }
   .campus-photo {
     height: 480px
   }
   .hero-crest {
     padding: 17px 20px;
-    left: -20px;
-    bottom: 30px
+    left: -20px
   }
   .hero-crest .brand-symbol {
     width: 48px
@@ -1563,7 +1551,7 @@ footer {
     width: 46px
   }
   .identity-strip {
-    font-size: 8px;
+    font-size: var(--text-caption);
     gap: 18px
   }
   .identity-strip>span {
@@ -1573,19 +1561,19 @@ footer {
     padding: 23px
   }
   .pillar-grid h3 {
-    font-size: 25px
+    font-size: var(--text-h3)
   }
   .section-heading {
     gap: 35px
   }
   .home-about .section-heading h2 {
-    font-size: 36px
+    font-size: var(--text-h2)
   }
   .network {
     gap: 7%
   }
   .join-banner h2 {
-    font-size: 39px
+    font-size: var(--text-h2)
   }
   .footer-top {
     gap: 25px
@@ -1601,7 +1589,7 @@ footer {
     padding: 23px
   }
   .join-steps h2 {
-    font-size: 25px
+    font-size: var(--text-h2)
   }
 }
 
@@ -1620,8 +1608,8 @@ footer {
     top: 100%;
     left: 0;
     right: 0;
-    background: white;
-    box-shadow: 0 15px 20px #0001;
+    background: var(--surface);
+    box-shadow: 0 15px 20px var(--shadow-color);
     padding: 25px 6%;
     flex-direction: column;
     align-items: stretch;
@@ -1638,7 +1626,7 @@ footer {
     padding-bottom: 55px
   }
   .hero h1 {
-    font-size: 5.3vw
+    font-size: var(--text-impact)
   }
   .hero h1 em {
     white-space: normal
@@ -1647,14 +1635,14 @@ footer {
     font-size: 13px
   }
   .hero .eyebrow {
-    font-size: 8px;
+    font-size: var(--text-caption);
     letter-spacing: 1px
   }
   .hero .actions {
     gap: 12px
   }
   .hero .button {
-    font-size: 11px;
+    font-size: var(--text-caption);
     padding: 14px 16px;
     gap: 15px
   }
@@ -1665,19 +1653,15 @@ footer {
     height: 445px;
     border-top-left-radius: 75px
   }
-  .campus-photo figcaption {
-    display: none
-  }
   .hero-crest {
     padding: 14px 18px;
-    left: -13px;
-    bottom: 20px
+    left: -13px
   }
   .hero-crest .brand-symbol {
     width: 43px
   }
   .hero-crest>span:last-child {
-    font-size: 8px
+    font-size: var(--text-caption)
   }
   .hero-crest b {
     font-size: 25px
@@ -1700,7 +1684,7 @@ footer {
     max-width: 620px
   }
   .home-about h2 {
-    font-size: 40px!important
+    font-size: var(--text-h2)
   }
   .pillar-grid {
     gap: 18px
@@ -1709,10 +1693,10 @@ footer {
     padding: 20px
   }
   .pillar-grid h3 {
-    font-size: 24px
+    font-size: var(--text-h3)
   }
   .pillar-num {
-    font-size: 7px;
+    font-size: var(--text-caption);
     letter-spacing: .7px
   }
   .pillar-glyph {
@@ -1725,7 +1709,7 @@ footer {
     padding: 27px 27px 0
   }
   .calendar-teaser h3 {
-    font-size: 32px
+    font-size: var(--text-h3)
   }
   .network-art {
     height: 330px;
@@ -1743,17 +1727,17 @@ footer {
     right: 20px
   }
   .network-art small {
-    font-size: 9px;
+    font-size: var(--text-caption);
     margin-top: 50px
   }
   .network h2 {
-    font-size: 36px
+    font-size: var(--text-h2)
   }
   .join-banner {
     gap: 30px
   }
   .join-banner h2 {
-    font-size: 35px
+    font-size: var(--text-h2)
   }
   .join-banner>div:last-of-type {
     padding-right: 0
@@ -1769,7 +1753,7 @@ footer {
     grid-template-columns: 1.5fr 1fr
   }
   .page-intro h1 {
-    font-size: 40px
+    font-size: var(--text-h1)
   }
   .intro-art {
     width: 145px
@@ -1793,7 +1777,7 @@ footer {
     gap: 30px 20px
   }
   .officer h3 {
-    font-size: 21px
+    font-size: var(--text-h3)
   }
   .id-feature {
     grid-template-columns: 1fr
@@ -1809,7 +1793,7 @@ footer {
     padding: 30px
   }
   .join-steps h2 {
-    font-size: 30px
+    font-size: var(--text-h2)
   }
   .join-steps p {
     max-width: 620px
@@ -1818,13 +1802,13 @@ footer {
 
 @media(max-width:620px) {
   .topbar {
-    font-size: 7px;
+    font-size: var(--text-caption);
     letter-spacing: .45px;
     padding-top: 9px;
     padding-bottom: 9px
   }
   .topbar a {
-    font-size: 8px
+    font-size: var(--text-caption)
   }
   .topbar>span {
     gap: 6px
@@ -1852,7 +1836,7 @@ footer {
     padding: 0
   }
   .hero h1 {
-    font-size: clamp(40px,10vw,63px);
+    font-size: var(--text-impact);
     line-height: 1.03;
     margin-bottom: 25px
   }
@@ -1863,7 +1847,7 @@ footer {
     font-size: 14px
   }
   .hero .eyebrow {
-    font-size: 8px
+    font-size: var(--text-caption)
   }
   .hero .button {
     font-size: 12px;
@@ -1874,7 +1858,7 @@ footer {
     margin-top: 27px
   }
   .hero-school p {
-    font-size: 9px
+    font-size: var(--text-caption)
   }
   .hero-visual {
     max-width: none;
@@ -1889,7 +1873,6 @@ footer {
   }
   .hero-crest {
     left: 0;
-    bottom: 20px;
     padding: 16px 20px
   }
   .hero-crest .brand-symbol {
@@ -1906,17 +1889,17 @@ footer {
     width: 42px
   }
   .cougar-badge span {
-    font-size: 6px
+    font-size: var(--text-caption)
   }
   .hero-coordinate {
     right: 7px;
     bottom: -25px;
-    font-size: 7px
+    font-size: var(--text-caption)
   }
   .identity-strip {
     padding: 18px 6%;
     gap: 10px;
-    font-size: 7px;
+    font-size: var(--text-caption);
     letter-spacing: .6px;
     flex-wrap: wrap;
     justify-content: center
@@ -1935,7 +1918,7 @@ footer {
     padding-bottom: 55px
   }
   h2 {
-    font-size: 34px
+    font-size: var(--text-h2)
   }
   .section-heading {
     display: block
@@ -1944,7 +1927,7 @@ footer {
     margin-bottom: 22px
   }
   .home-about h2 {
-    font-size: 35px!important
+    font-size: var(--text-h2)
   }
   .home-about .section-heading p {
     font-size: 14px
@@ -1963,14 +1946,14 @@ footer {
     padding: 25px
   }
   .pillar-grid h3 {
-    font-size: 28px;
+    font-size: var(--text-h3);
     margin-top: 22px
   }
   .pillar-grid p {
     font-size: 13px
   }
   .pillar-num {
-    font-size: 8px;
+    font-size: var(--text-caption);
     letter-spacing: 1px
   }
   .pillar-glyph {
@@ -1981,10 +1964,10 @@ footer {
   }
   .calendar-teaser {
     padding: 30px 30px 0;
-    box-shadow: 6px 6px 0 #d5dfc6
+    box-shadow: 6px 6px 0 var(--line)
   }
   .calendar-teaser h3 {
-    font-size: 36px
+    font-size: var(--text-h3)
   }
   .network {
     gap: 38px
@@ -2005,11 +1988,11 @@ footer {
     right: 35px
   }
   .network-art small {
-    font-size: 10px;
+    font-size: var(--text-caption);
     margin-top: 35px
   }
   .network h2 {
-    font-size: 34px
+    font-size: var(--text-h2)
   }
   .join-banner {
     flex-direction: column;
@@ -2019,7 +2002,7 @@ footer {
     padding-bottom: 45px
   }
   .join-banner h2 {
-    font-size: 36px
+    font-size: var(--text-h2)
   }
   .join-banner p {
     font-size: 13px;
@@ -2046,7 +2029,7 @@ footer {
   }
   .uh-signoff {
     gap: 10px;
-    font-size: 6px;
+    font-size: var(--text-caption);
     letter-spacing: .6px
   }
   .uh-signoff b {
@@ -2059,21 +2042,21 @@ footer {
     width: 36px
   }
   .footer-bottom>span {
-    font-size: 8px
+    font-size: var(--text-caption)
   }
   .page-intro {
     padding-top: 43px;
     padding-bottom: 42px
   }
   .page-intro h1 {
-    font-size: clamp(31px,8.6vw,46px);
+    font-size: var(--text-h1);
     line-height: 1.08
   }
   .page-intro p {
     font-size: 14px
   }
   .page-intro .eyebrow {
-    font-size: 8px
+    font-size: var(--text-caption)
   }
   .intro-art {
     position: absolute;
@@ -2095,7 +2078,7 @@ footer {
     padding: 30px 22px
   }
   .empty-state h3 {
-    font-size: 25px
+    font-size: var(--text-h3)
   }
   .officer-grid {
     grid-template-columns: repeat(2,minmax(0,1fr));
@@ -2108,18 +2091,18 @@ footer {
     font-size: 47px
   }
   .officer-placeholder small {
-    font-size: 6px;
+    font-size: var(--text-caption);
     letter-spacing: 1px;
     bottom: 11px;
     left: 13px
   }
   .officer h3 {
-    font-size: 21px;
+    font-size: var(--text-h3);
     line-height: 1.12;
     margin-top: 15px
   }
   .officer p {
-    font-size: 11px;
+    font-size: var(--text-caption);
     line-height: 1.5
   }
   .officer img {
@@ -2129,11 +2112,11 @@ footer {
     align-items: flex-start
   }
   .calendar-controls h2 {
-    font-size: 26px;
+    font-size: var(--text-h2);
     max-width: 175px
   }
   .calendar-controls .eyebrow {
-    font-size: 8px
+    font-size: var(--text-caption)
   }
   .month-actions {
     gap: 4px
@@ -2156,7 +2139,7 @@ footer {
     gap: 10px
   }
   .tabs button {
-    font-size: 11px;
+    font-size: var(--text-caption);
     text-align: left;
     padding: 12px 14px
   }
@@ -2182,16 +2165,16 @@ footer {
     padding: 25px
   }
   .join-steps h2 {
-    font-size: 28px
+    font-size: var(--text-h2)
   }
 }
 
 @media(max-width:360px) {
   .hero h1 {
-    font-size: 10vw
+    font-size: var(--text-impact)
   }
   .hero .actions .button {
-    font-size: 11px;
+    font-size: var(--text-caption);
     padding: 13px 14px
   }
   .footer-bottom {
@@ -2201,7 +2184,7 @@ footer {
     display: none
   }
   .officer h3 {
-    font-size: 19px
+    font-size: var(--text-h3)
   }
   .brand-name {
     font-size: 21px
@@ -2228,7 +2211,7 @@ footer {
     grid-template-columns: 1fr
   }
   .pillar-grid h3 {
-    font-size: 28px
+    font-size: var(--text-h3)
   }
   .pillar-grid article {
     padding: 26px
@@ -2269,4 +2252,144 @@ footer {
 @media (max-width: 600px) {
   .brand-symbol, .footer-logo .brand-symbol { width: 48px; }
   .network-crest .brand-symbol { width: 115px; }
+}
+
+/* BRASA 2025 component hierarchy. Layout, content and CMS hooks are preserved. */
+body { font-size: var(--text-body); line-height: 1.5; }
+h1, h2, h3 { font-family: var(--font-body); letter-spacing: -.02em; line-height: 1.2; }
+h1 { font-size: var(--text-h1); font-weight: 700; }
+h2 { font-size: var(--text-h2); font-weight: 400; }
+h3 { font-size: var(--text-h3); font-weight: 400; }
+p { line-height: 1.5; }
+.hero h1.impact-heading, .join-banner h2.impact-heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: -.025em;
+}
+.hero h1.impact-heading { font-size: var(--text-impact); }
+.join-banner h2.impact-heading { font-size: clamp(3rem, 4vw, 4rem); max-width: 16ch; }
+.hero h1.brand-heading, .join-banner h2.brand-heading, .brand-heading {
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+.hero h1 em { white-space: normal; }
+.brand-name { font-family: var(--font-body); font-weight: 900; letter-spacing: -.025em; }
+.brand-name small { font-size: 8px; letter-spacing: .08em; }
+header { border-bottom: 1px solid var(--line); }
+nav { gap: clamp(12px, 1.6vw, 25px); font-size: 14px; }
+nav>a[aria-current], nav>a:not(.button):hover { color: var(--blue); border-bottom-color: var(--blue); }
+.button { background: var(--blue); border-color: var(--blue); border-radius: var(--radius-control); min-height: 48px; font-size: 16px; font-weight: 400; }
+.button:hover { background: var(--deep); border-color: var(--deep); transform: translateY(-1px); }
+header .button, .hero .button:not(.outline) { background: var(--red); border-color: var(--red); }
+header .button:hover, .hero .button:not(.outline):hover { background: var(--red-dark); border-color: var(--red-dark); }
+.button.small, .join-steps .button { font-size: 16px; }
+.button.outline { background: transparent; border-color: var(--on-dark); color: var(--on-dark); }
+.button.outline:hover { background: var(--hover-on-dark); border-color: var(--on-dark); }
+.button.white { background: var(--surface); color: var(--red); border-color: var(--surface); }
+.hero, .page-intro { color: var(--on-dark); }
+.hero p, .hero .eyebrow, .page-intro p, .page-intro .eyebrow { color: var(--on-dark); }
+.hero-crest, .cougar-badge, .network-crest { transform: none; box-shadow: none; }
+.hero-crest { color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius-card); }
+.cougar-badge span { font-size: 12px; }
+.hero-crest>span:last-child, .hero-coordinate, .campus-photo figcaption { font-size: 12px; }
+.hero-description, .home-about .section-heading p, .network p, .home-events>div>p, .mission p:not(.lead), .id-feature p { font-size: 16px; }
+.hero-school p { font-size: var(--text-caption); }
+.section { padding-top: var(--section-space); padding-bottom: var(--section-space); }
+.eyebrow, .pillar-num, .teaser-top .eyebrow, .intro-label { font-size: 12px; letter-spacing: .08em; }
+.identity-strip { font-size: 12px; flex-wrap: wrap; gap: 18px; color: var(--ink); }
+.pillar-grid article { border: 1px solid var(--line); border-top: 3px solid var(--green); background: var(--surface); border-radius: var(--radius-card); padding: 30px; }
+.pillar-grid article:nth-child(2) { background: var(--surface); border-color: var(--line); border-top-color: var(--blue); }
+.pillar-grid article:nth-child(3) { background: var(--surface); border-color: var(--line); border-top-color: var(--red); }
+.pillar-grid h3 { font-size: var(--text-h3); margin: 28px 0 16px; font-weight: 400; }
+.pillar-grid p { color: var(--ink); font-size: 16px; line-height: 1.5; }
+.home-events, .soft { background: var(--soft); }
+.soft p, .home-events>div>p, .notice p { color: var(--ink); }
+.calendar-teaser { background: var(--deep); color: var(--on-dark); border-radius: var(--radius-card); box-shadow: none; border-bottom: 4px solid var(--yellow); }
+.calendar-teaser h3 { font-family: var(--font-body); font-size: var(--text-h2); font-weight: 700; letter-spacing: -.02em; color: var(--on-dark); }
+.home-events .calendar-teaser p { color: var(--on-dark); font-size: 14px; }
+.arrow-link, .calendar-teaser .arrow-link { font-size: 16px; line-height: 1.5; }
+.network-art { background: var(--soft); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius-card); }
+.network-spark { color: var(--yellow); }
+.network-art small { font-size: var(--text-caption); letter-spacing: .06em; }
+.join-banner { background: var(--deep); color: var(--on-dark); }
+.join-banner .eyebrow, .join-banner p { color: var(--on-dark); }
+.join-banner .button { background: var(--surface); border-color: var(--surface); color: var(--deep); }
+.join-banner .button:hover { background: var(--yellow); border-color: var(--yellow); color: var(--ink); }
+footer { color: var(--on-dark); }
+.footer-top p, .footer-top>div>a:not(.logo), .footer-top>div>span[data-contact] { color: var(--on-dark); font-size: 14px; }
+.footer-top h3 { font-size: 16px; font-weight: 700; }
+.footer-tag, .footer-bottom, .uh-signoff { font-size: 12px; }
+.officer-grid { gap: clamp(32px,4vw,56px) 32px; }
+.officer { text-align: center; }
+.officer img, .officer-placeholder {
+  width: min(100%, 240px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  margin-inline: auto;
+  border: 2px solid var(--line);
+  background: var(--soft);
+}
+.officer-placeholder { border-color: var(--line); }
+.officer-placeholder::before { display: none; }
+.officer-placeholder small { left: 0; right: 0; bottom: 22px; font-size: 12px; color: var(--ink); }
+.officer-placeholder>span { font-family: var(--font-body); font-size: clamp(40px,6vw,72px); font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+.officer:nth-child(3n+2) .officer-placeholder, .officer:nth-child(3n) .officer-placeholder { background: var(--soft); border-color: var(--line); }
+.officer:nth-child(3n) .officer-placeholder>span { color: var(--ink); }
+.officer h3 { font-size: 20px; font-weight: 400; margin-top: 22px; }
+.officer p, .officer .arrow-link { font-size: 14px; }
+.month-actions button { min-width: 44px; min-height: 44px; }
+.day.outside { background: var(--soft); color: var(--ink); }
+.tabs button { min-height: 48px; font-size: 16px; }
+.empty-state, .join-steps article, .partner-grid article { border-radius: var(--radius-card); }
+.join-steps h2 { font-size: var(--text-h2); }
+.join-steps p, .global-links p, .partner-grid p { font-size: 16px; }
+.id-card { transform: none; box-shadow: none; background: var(--deep); }
+.id-card>span, .id-card p { font-family: var(--font-body); }
+.id-card small { font-size: 12px; }
+a:focus-visible, button:focus-visible, select:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 4px; box-shadow: 0 0 0 2px var(--surface); }
+.hero :focus-visible, .join-banner :focus-visible, footer :focus-visible { outline-color: var(--yellow); }
+@media(max-width:1150px) {
+  nav { gap: 14px; font-size: 13px; }
+  .hero { gap: 4%; grid-template-columns: 1.1fr 1fr; }
+}
+@media(max-width:900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-copy { max-width: 720px; }
+  .hero-visual { justify-self: start; max-width: 100%; }
+  .hero h1.impact-heading { max-width: 14ch; }
+  .hero .actions .button { font-size: 16px; }
+  .join-banner h2.impact-heading { max-width: none; }
+  .footer-top { row-gap: 36px; }
+}
+@media(max-width:620px) {
+  .topbar { flex-direction: column; align-items: flex-start; font-size: 12px; gap: 4px; }
+  .topbar a { font-size: 12px; }
+  .hero { gap: 48px; }
+  .hero h1.impact-heading { font-size: 48px; overflow-wrap: anywhere; }
+  .hero .button { font-size: 16px; padding: 14px 18px; }
+  .hero-crest { gap: 10px; }
+  .cougar-badge { width: 98px; height: 98px; }
+  .identity-strip { justify-content: flex-start; font-size: 12px; }
+  .identity-strip>span { gap: 10px; }
+  .identity-strip>span:nth-child(4) { display: flex; }
+  .officer-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px 18px; }
+  .officer h3 { font-size: 18px; }
+  .officer-placeholder small { font-size: 12px; bottom: 16px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 28px; }
+  .footer-bottom>span { font-size: 12px; }
+}
+
+/* These original portraits put the face near the top of the frame.
+   Match the image, not the person's name: replacements keep the center default. */
+.officer img[src*="ce919b58-9bf4-46d6-8d43-6ea3e2e40ef5.png"],
+.officer img[src*="dda3de93-53e6-4afc-beb4-2a8b86ca249a.png"],
+.officer img[src*="d76edcae-d18b-4052-87e8-3677ec024e2e.png"],
+.officer img[src*="7ca25182-be65-4f57-8e8a-6a7caba18d27.png"] { object-position: center top; }
+@media(max-width:360px) {
+  .hero h1.impact-heading { letter-spacing: -.06em; }
 }

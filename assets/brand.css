@@ -1,0 +1,58 @@
+@import url('fonts/brand-fonts.css');
+
+/* BRASA Visual Identity 2025 + University of Houston.
+   Hagrid is pending a licensed font file. Lato is the explicit display fallback. */
+:root {
+  --brasa-blue: #065FD8;
+  --brasa-green: #03571A;
+  --brasa-yellow: #FFCC02;
+  --brasa-navy: #1A2B77;
+  --brasa-leaf: #00863D;
+  --brasa-orange: #FB8C0A;
+  --brasa-gradient-green: #009F00; /* Manual: backgrounds with gradients only. */
+  --brasa-vivid-green: #4BBF4B;
+  --brasa-light-yellow: #F5D566;
+  --uh-red: #C8102E;
+  --uh-red-hover: #A50D26;
+  --surface: #FFFFFF;
+  --surface-muted: #F4F4F4;
+  --text: #252726;
+  --text-muted: #515860;
+  --border: #D7DCE2;
+  --on-dark: #F4F4F4;
+  --on-dark-muted: #F4F4F4;
+  --border-on-dark: #FFFFFF40;
+  --hover-on-dark: #FFFFFF12;
+  --decoration-on-dark: #FFFFFF18;
+  --photo-overlay: #252726B3;
+  --shadow-color: #25272612;
+  --focus-ring: var(--brasa-blue);
+  --tint-blue: color-mix(in srgb, var(--brasa-blue) 6%, var(--surface));
+  --tint-green: color-mix(in srgb, var(--brasa-green) 6%, var(--surface));
+  --tint-yellow: color-mix(in srgb, var(--brasa-yellow) 12%, var(--surface));
+  --tint-red: color-mix(in srgb, var(--uh-red) 5%, var(--surface));
+  --font-body: 'Lato', Arial, sans-serif;
+  --font-display: 'Hagrid', 'Lato', Arial, sans-serif;
+  --text-caption: .8125rem;
+  --text-body: 1rem;
+  --text-h1: clamp(2rem, 3.5vw, 3rem);
+  --text-h2: clamp(1.5rem, 2.5vw, 2rem);
+  --text-h3: 1.25rem;
+  --text-impact: clamp(3rem, 4.8vw, 4.75rem);
+  --radius-control: 6px;
+  --radius-card: 12px;
+  --section-space: clamp(3.5rem, 6vw, 5.5rem);
+  /* Compatibility aliases keep the existing components and preview in sync. */
+  --red: var(--uh-red);
+  --red-dark: var(--uh-red-hover);
+  --green: var(--brasa-green);
+  --deep: var(--brasa-navy);
+  --yellow: var(--brasa-yellow);
+  --blue: var(--brasa-blue);
+  --ink: var(--text);
+  --muted: var(--text-muted);
+  --cream: var(--surface);
+  --soft: var(--surface-muted);
+  --line: var(--border);
+  --display: var(--font-body);
+}
